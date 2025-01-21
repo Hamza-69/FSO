@@ -41,28 +41,44 @@ const App = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         let toUpdate;
-        let text, className;
-        if (persons.find((item) => item.name.toLowerCase() === newName.toLowerCase() && (toUpdate = item)) && window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`))
+        if (persons.find((item) => item.name.toLowerCase() === newName.toLowerCase() && (toUpdate = item))) {
+        if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
             people.updateNumber(toUpdate, newNumber).then((response) => {
+                response = response.data
                 setPersons(persons.map(item => {
-                    if (item.id === response.id) {
+                    if (item.name === newName) {
                         return {...item, number: newNumber}
                     }
+                    setText(`Changed ${newName} Phone Number`)
+                    setType("good")
                     return item
                 }))
-                setText(`Changed ${newName} Phone Number`)
-                setType("good")
-            }).catch((response) => {
+            }
+            ).catch((response) => {
+                if (response.status === 400) {
+                    setText(response.response.data.error)
+                    setType("error")
+                    return
+                }
                 setText(`Information of ${newName} has already been removed from server`)
                 setType("error")
             })
-        else {
+        }} else {
             let person = {name: newName, number: newNumber}
             people.add(person).then(response => {
+                response = response.data
                 setPersons(persons.concat(response))
+                setText(`Added ${newName}`)
+                setType("good")
+            }).catch((response) => {
+                if (response.status === 400) {
+                    setText(response.response.data.error)
+                    setType("error")
+                    return
+                }
+                setText(`Information of ${newName} has already been removed from server`)
+                setType("error")
             })
-            setText(`Added ${newName}`)
-            setType("good")
         }
             setNewName("")
             setNewNumber("")

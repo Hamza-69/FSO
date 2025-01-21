@@ -1,22 +1,18 @@
 import axios  from "axios";
-
+let baseURL = "/api/persons/"
 let getAll = () => {
-    return axios.get("http://localhost:3001/persons").then((response) => {
+    return axios.get(baseURL).then((response) => {
         return response.data;
     });
 }
 let add = (person) => {
-    return axios.post("http://localhost:3001/persons", person).then((response) => {
-        return response.data;
-    })
+    return axios.post(baseURL, person)
 }
 
 let deleteItem = (id) => {
-    return axios.delete(`http://localhost:3001/persons/${id}`)
+    return axios.delete(`${baseURL}${id}`)
 }
 let updateNumber = (item, number) => {
-    return axios.put(`http://localhost:3001/persons/${item.id}`, {...item, number: number}).then((response) => {
-        return response.data;
-    })
+    return axios.put(`${baseURL}${item.id}`, {...item, number: number})
 }
 export default {getAll, add, deleteItem, updateNumber }
