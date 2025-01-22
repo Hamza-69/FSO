@@ -103,7 +103,7 @@ const App = () => {
         <div>
             <h2>Phonebook</h2>
             <Notification className={type} text={text} />
-            <Filter text ="filter above with:" value = {filter} onChange={handleChange} />
+            <Filter text = "filter above with:" value = {filter} onChange={handleChange} />
             <h2>add a new</h2>
             <form onSubmit={handleSubmit}>
                 <Input text = "name:" value={newName} onChange={e => setNewName(e.target.value)} />

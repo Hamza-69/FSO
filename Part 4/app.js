@@ -22,12 +22,17 @@ mongoose.connect(mongoUrl).then(() => {
 app.use(cors())
 app.use(express.json())
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the API')
+})
+
+app.use('/api/login', loginRouter)
+
 app.use(middleware.tokenExtractor, blogRouter)
 app.use(middleware.userExtractor, blogRouter)
 
 app.use('/api/blogs', blogRouter)
 app.use('/api/users', userRouter)
-app.use('/api/login', loginRouter)
 app.use(middleware.errorHandler)
 app.use(middleware.unknownEndpoint)
 

@@ -10,10 +10,11 @@ const errorHandler = (error, request, response, next) => {
   } else if (error.name === 'MongoServerError' && error.message.includes('E11000 duplicate key error')) {
     return response.status(400).json({ error: 'expected `username` to be unique' })
   } else if (error.name ===  'JsonWebTokenError') {
-    return response.status(401).json({ error: 'token invalid' })
+    return response.status(400).json({ error: 'token missing or invalid' })
   }
   next(error)
 }
+
 const tokenExtractor = (request, response, next) => {
   const authorization = request.get('authorization')
   if (authorization && authorization.startsWith('Bearer ')) {

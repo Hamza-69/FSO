@@ -1,0 +1,16 @@
+.error, .good {
+    background: lightgray;
+    font-size: 20px;
+    padding: 5px;
+    border: solid, 2px black;
+    border-radius: 3px;
+}
+
+.error {
+    border-color: red;
+    color:red;
+}
+.good {
+    border-color: green;
+    color: green;
+}
