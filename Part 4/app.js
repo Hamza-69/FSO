@@ -27,12 +27,13 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/login', loginRouter)
+app.use('/api/users', userRouter)
 
 app.use(middleware.tokenExtractor, blogRouter)
 app.use(middleware.userExtractor, blogRouter)
 
 app.use('/api/blogs', blogRouter)
-app.use('/api/users', userRouter)
+
 app.use(middleware.errorHandler)
 app.use(middleware.unknownEndpoint)
 

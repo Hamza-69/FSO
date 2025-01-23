@@ -1,26 +1,35 @@
-const Login = ({handleLogin, setUser, setPassword, user, password}) => {
+import PropTypes from 'prop-types'
+
+const Login = ({ handleLogin, setUser, setPassword, user, password }) => {
   return (
     <form onSubmit={handleLogin}>
       <div>
         username
-        <input 
-          type="text"
+        <input
+          type='text'
           value={user}
-          name="Username"
+          name='Username'
           onChange={({ target }) => setUser(target.value)}
         />
       </div>
       <div>
         password
-        <input 
-          type="password"
+        <input
+          type='password'
           value={password}
-          name="Password"
+          name='Password'
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit">login</button>
+      <button type='submit'>login</button>
     </form>
   )
+}
+Login.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
+  setPassword: PropTypes.func.isRequired,
+  user: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired
 }
 export default Login

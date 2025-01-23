@@ -1,8 +1,8 @@
-const Notification = ({className,text}) => {
+const Notification = ({ className, text }) => {
   return (
-      <div className={className}>
-          {text}
-      </div>
+    <div className={className}>
+      {text}
+    </div>
   )
 }
 
