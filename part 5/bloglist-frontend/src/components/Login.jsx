@@ -8,6 +8,7 @@ const Login = ({ handleLogin, setUser, setPassword, user, password }) => {
         <input
           type='text'
           value={user}
+          data-testid = "name"
           name='Username'
           onChange={({ target }) => setUser(target.value)}
         />
@@ -17,6 +18,7 @@ const Login = ({ handleLogin, setUser, setPassword, user, password }) => {
         <input
           type='password'
           value={password}
+          data-testid = "password"
           name='Password'
           onChange={({ target }) => setPassword(target.value)}
         />

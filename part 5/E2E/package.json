@@ -1,0 +1,19 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test:frontend": "cd ../bloglist-frontend/ ; npm run dev ",
+    "test:backend": "cd ../../Part\\ 4/ ; npm run start:test",
+    "test": "playwright test",
+    "test:ui": " npm run test -- --ui",
+    "test:report": "playwright show-report"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.50.0",
+    "@types/node": "^22.10.10"
+  }
+}

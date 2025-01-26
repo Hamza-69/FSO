@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 const Toggleble = forwardRef(({ text, text2, children, position }, ref) => {
   const [hidden, setHidden] = useState(true)
-  const styleHidden = hidden ? { display : 'none' }: { display : 'unset' }
-  const styleNotHidden = hidden ? { display : 'unset' }: { display : 'none' }
+  const styleHidden = hidden ? { display : 'none' }: { display : '' }
+  const styleNotHidden = hidden ? { display : '' }: { display : 'none' }
 
   const toggle = () => { setHidden(!hidden) }
   useImperativeHandle(ref, () => {
@@ -15,14 +15,14 @@ const Toggleble = forwardRef(({ text, text2, children, position }, ref) => {
 
   return (
     <>
-      <div style = { styleHidden } >
+      <span style = { styleHidden } className='hidden'>
         { !position || <button onClick={ toggle }>{ text2 || 'cancel' }</button> }
         { children }
         { position || <button onClick={ toggle }>{ text2 || 'cancel' }</button> }
-      </div>
-      <div style = { styleNotHidden } >
+      </span>
+      <span style = { styleNotHidden } className='shown'>
         <button onClick={ toggle }>{ text }</button>
-      </div>
+      </span>
     </>
   )
 })

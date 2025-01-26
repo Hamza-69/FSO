@@ -27,6 +27,7 @@ const App = () => {
     try {
       const user = await loginService.login({ username, password })
       setUser(user)
+      console.log(user)
       setToken(user.token)
       window.localStorage.setItem(
         'loggedNoteappUser', JSON.stringify(user)
@@ -62,10 +63,10 @@ const App = () => {
     }
   }
 
-  const handleSubmit = async (e, title, author, url) => {
-    e.preventDefault()
+  const handleSubmit = async ({ title, author, url }) => {
     try {
-      setBlogs(blogs.concat(await blogService.sendBlog({ title, author, url }, token)))
+      setBlogs(blogs.concat({ ...(await blogService.sendBlog({ title, author, url }, token)), user: user }))
+      console.log(blogs)
       setNotification(`a new blog ${title} by ${author} added`)
       setNotificationType('good')
       blogref.current.toggle()
@@ -112,9 +113,9 @@ const App = () => {
         <>
           <p>{user.name} logged in <Button text='Logout' handleClick = {handleLogout}/></p>
           <Toggleble text={'new blog'} ref={blogref}>
-            <BlogForm token = {token} setNotification={setNotification} setNotificationType={setNotificationType} handleSubmit={handleSubmit} />
+            <BlogForm createBlog = {handleSubmit} />
           </Toggleble>
-          <Blogs blogs={blogs} handleLike = {handleLike} handleDelete = {handleDelete}/>
+          <Blogs blogs={blogs} user = {user} handleLike = {handleLike} handleDelete = {handleDelete}/>
         </>:
         <>
           <Login handleLogin={handleLogin} setUser={setUsername} setPassword={setPassword} user={username} password={password}/>

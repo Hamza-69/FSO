@@ -34,6 +34,11 @@ app.use(middleware.userExtractor, blogRouter)
 
 app.use('/api/blogs', blogRouter)
 
+if (process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./controllers/testing')
+  app.use('/api/testing', testingRouter)
+}
+
 app.use(middleware.errorHandler)
 app.use(middleware.unknownEndpoint)
 
