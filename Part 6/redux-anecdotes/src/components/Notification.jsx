@@ -3,7 +3,7 @@
  const Notification = () => {
   const notification = useSelector(state => state.notification)
   const visiblity = useSelector(state => state.display)
-
+  
   const style = {
     border: 'solid',
     padding: 10,

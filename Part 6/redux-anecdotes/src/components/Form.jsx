@@ -1,19 +1,16 @@
 import { useDispatch } from 'react-redux'
 import { createAnn } from '../reducers/anecdoteReducer'
-import { changeNotification } from '../reducers/notificationReducer'
-import { changeDisplay } from '../reducers/displayReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
 const Form = () => {
   const dispatch = useDispatch()
 
-  const addNote = (event) => {
+  const addNote = async (event) => {
     event.preventDefault()
     const content = event.target.annecdote.value
     event.target.annecdote.value = ''
     dispatch(createAnn(content))
-    dispatch(changeDisplay(''))
-    dispatch(changeNotification(`voted to ${content} successfully!`))
-    setTimeout(() => dispatch(changeDisplay('none')), 5000)
+    dispatch(setNotification(`added ${content} successfully!`, 5))
   }
 
   return (

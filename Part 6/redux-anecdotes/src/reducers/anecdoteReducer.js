@@ -1,48 +1,42 @@
 import { createSlice } from '@reduxjs/toolkit'
-
-const anecdotesAtStart = [
-  'If it hurts, do it more often',
-  'Adding manpower to a late software project makes it later!',
-  'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
-  'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
-  'Premature optimization is the root of all evil.',
-  'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
-]
-
-const getId = () => (100000 * Math.random()).toFixed(0)
-
-const asObject = (anecdote) => {
-  return {
-    content: anecdote,
-    id: getId(),
-    votes: 0
-  }
-}
-
-const initialState = anecdotesAtStart.map(asObject)
+import ann from '../services/anecdote'
 
 const anecdoteSlice = createSlice({
   name: 'anecdote',
-  initialState,
+  initialState :[],
   reducers: {
-      createAnn(state, action) {
-      const content = action.payload
-      state.push({
-        content,
-        id: getId(),
-        votes: 0
-      })
-      },
+    addAnn(state, action) {
+      state.push(action.payload)
+    },
     voteApp(state, action) {
-      const id = action.payload
-      const toChange = state.find(n => n.id === id)
-      const changed = { 
-        ...toChange, 
-        votes: toChange.votes + 1 
-      }
-      return state.map(n => n.id == id ? changed: n)
+      return state.map(n => n.id == action.payload.id ? action.payload: n)
       },
-}})
+   setAnn(state, action) {
+    return action.payload
+   }
+}}) 
 
-export const { createAnn, voteApp } = anecdoteSlice.actions
+export const { addAnn, voteApp, setAnn } = anecdoteSlice.actions
+
+export const initializeAnn = () => {
+  return async dispatch => {
+    const notes = await ann.getAll()
+    dispatch(setAnn(notes))
+  }
+}
+
+export const voteAnn = x => {
+  return async dispatch => {
+    const newNote = await ann.voteAnn(x)
+    dispatch(voteApp(newNote))
+  }
+}
+
+export const createAnn = x => {
+  return async dispatch => {
+    const newNote = await ann.saveAnn(x)
+    dispatch(addAnn(newNote))
+  }
+}
+
 export default anecdoteSlice.reducer
